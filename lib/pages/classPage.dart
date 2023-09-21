@@ -12,6 +12,7 @@ class ClassPage extends StatefulWidget {
 class _ClassPageState extends State<ClassPage> {
   final List bottomPages = [
     Container(
+      margin: const EdgeInsets.symmetric(horizontal: 3),
       child: ListView(
         children: [
           studentList(
@@ -42,8 +43,22 @@ class _ClassPageState extends State<ClassPage> {
       ),
     ),
     Container(
-      child: const Center(
-        child: Text('Page 2'),
+      padding: const EdgeInsets.all(10),
+      child: GridView.count(
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        crossAxisCount: 3,
+        children: [
+          attendanceDay(date: '21/09/2023', activeStudent: 11),
+          attendanceDay(date: '22/09/2023', activeStudent: 12),
+          attendanceDay(date: '23/09/2023', activeStudent: 10),
+          attendanceDay(date: '24/09/2023', activeStudent: 12),
+          attendanceDay(date: '25/09/2023', activeStudent: 12),
+          attendanceDay(date: '28/09/2023', activeStudent: 12),
+          attendanceDay(date: '29/09/2023', activeStudent: 11),
+          attendanceDay(date: '30/09/2023', activeStudent: 12),
+          attendanceDay(date: '30/09/2023', activeStudent: 12),
+        ],
       ),
     ),
     Container(
@@ -52,8 +67,50 @@ class _ClassPageState extends State<ClassPage> {
       ),
     ),
     Container(
-      child: const Center(
-        child: Text('Page 4'),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      child: ListView(
+        children: [
+          const Text(
+            textAlign: TextAlign.center,
+            'Lesson Plan',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
+          ),
+          Container(
+            height: 100,
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.black)
+            ),
+            child: TextField(
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                label: Text('Lesson'),
+                contentPadding: EdgeInsets.symmetric(horizontal: 10),
+              ),
+            ),
+          ),
+          SizedBox(height: 10,),
+          Container(
+            height: 100,
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.black)
+            ),
+            child: TextField(
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                label: Text('Assessment'),
+                contentPadding: EdgeInsets.symmetric(horizontal: 10),
+              ),
+            ),
+          ),
+          SizedBox(height: 10,),
+          const Text(
+            textAlign: TextAlign.center,
+            'Planned Activities',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
+          ),
+        ],
       ),
     ),
   ];
@@ -118,7 +175,8 @@ class _ClassPageState extends State<ClassPage> {
           setState(() {
             _selectedIndex = index;
             _pageController.animateToPage(index,
-                duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeIn);
           });
         },
       ),
@@ -130,7 +188,7 @@ Widget studentList({String? studentImage, String? studentName}) {
   return Material(
     elevation: 2,
     child: Container(
-      margin: const EdgeInsets.all(3),
+      margin: const EdgeInsets.symmetric(vertical: 3),
       height: 80,
       decoration: BoxDecoration(
         color: Colors.cyanAccent,
@@ -155,6 +213,52 @@ Widget studentList({String? studentImage, String? studentName}) {
           ],
         ),
       ),
+    ),
+  );
+}
+
+Widget attendanceDay({String? date, int? activeStudent}) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.grey,
+      borderRadius: BorderRadius.circular(10),
+    ),
+    padding: const EdgeInsets.all(15),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text(
+          date!,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+              color: Colors.green,
+              width: 40,
+              height: 40,
+              child: Center(
+                child: Text(
+                  activeStudent.toString(),
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.red,
+              width: 40,
+              height: 40,
+              child: Center(
+                child: Text(
+                  (12 - activeStudent!).toString(),
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
     ),
   );
 }
